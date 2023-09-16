@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jogoteca</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
   </head>
   <body>
     <div class="container">
@@ -19,12 +20,22 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Log-in</h1>
+        <h1>Faça seu login</h1>
         <form method="POST" action="{{ url_for('autenticar') }}">
-            <input type="hidden" name="next" value="{{ next or url_for('index') }}">
-            <p><label>User name:</label> <input class="form-control" type="text" name="user" required></p>
-            <p><label>Password:</label> <input class="form-control" type="password" name="password" required></p>
-            <p><button class="btn btn-primary" type="submit">Entrar</button></p>
+            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+            {{ form.csrf_token() }}
+            <div class="form-group">
+                {{ form.nickname.label(class="form-label") }}
+                {{ form.nickname(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.senha.label(class="form-label") }}
+                {{ form.senha(class="form-control") }}
+            </div>
+            <div class="form-group buttons">
+                {{ form.login(class="btn btn-primary") }}
+                <a class="btn btn-danger" href="{{ url_for('index') }}">Voltar</a>
+            </div>
         </form>
     </div>
 </body>
